@@ -1,0 +1,39 @@
+@font-face {
+  font-family: mazzardH;
+  src: url(assets/fonts/mazzardH/MazzardH-Light.otf);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: mazzardH;
+  src: url(assets/fonts/mazzardH/MazzardH-Regular.otf);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: mazzardH;
+  src: url(assets/fonts/mazzardH/MazzardH-ExtraLight.otf);
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: mazzardH;
+  src: url(assets/fonts/mazzardH/MazzardH-Medium.otf);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: mazzardH;
+  src: url(assets/fonts/mazzardH/MazzardH-SemiBold.otf);
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: mazzardH;
+  src: url(assets/fonts/mazzardH/MazzardH-Bold.otf);
+  font-weight: 800;
+}
+
+body {
+  font-family: mazzardH;
+}
