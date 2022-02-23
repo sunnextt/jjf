@@ -1,84 +1,32 @@
-import { dataActions } from "./data";
-import UserService from "src/services/user.service";
+import { dataActions } from './data';
+import UserService from 'src/services/user.service';
 
-export const fetchPosts = () => {
+export const fetchAllUser = () => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await UserService.getPosts();
-      return response;
+      const response = await UserService.getAllUser();
+      return response.data;
     };
 
     try {
       const res = await fetchData();
-      dispatch(dataActions.setPosts({ data: res.data.data }));
+      dispatch(dataActions.setAllUser({ data: res.data.data }));
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-export const fetchAllLearnArticle = () => {
+export const fetchAllApplications = () => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await UserService.getAllLearnArticle();
-
-      return response;
+      const response = await UserService.getAllApplications();
+      return response.data;
     };
 
     try {
       const res = await fetchData();
-      dispatch(dataActions.setArticle({ data: res.data.data }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-export const fetchAllLearnCategory = () => {
-  return async (dispatch) => {
-    const fetchData = async () => {
-      const response = await UserService.getAllLearnCategory();
-
-      return response;
-    };
-
-    try {
-      const res = await fetchData();
-      dispatch(dataActions.setLearnCategory({ data: res.data.data }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-
-export const fetchAllCoin = () => {
-  return async (dispatch) => {
-    const fetchData = async () => {
-      const response = await UserService.getAllCoin();
-
-      return response;
-    };
-
-    try {
-      const res = await fetchData();
-      dispatch(dataActions.setCoin({ data: res.data.data }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const fetchAllCoinCategory = () => {
-  return async (dispatch) => {
-    const fetchData = async () => {
-      const response = await UserService.getAllCoinCategory();
-
-      return response;
-    };
-
-    try {
-      const res = await fetchData();
-      dispatch(dataActions.setCoinCategory({ data: res.data.data }));
+      dispatch(dataActions.setAllApplications({ data: res.data.data }));
     } catch (error) {
       console.log(error);
     }

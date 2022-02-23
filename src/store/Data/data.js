@@ -1,31 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  post: null,
-  article: null,
-  coin: null,
-  learnCategory: null,
-  coinCategory: null,
+  allUser: null,
+  allApplication: null,
 };
 
 const dataSlice = createSlice({
   name: 'allUsers',
   initialState: initialState,
   reducers: {
-    setPosts: (state, action) => {
-      state.post = action.payload.data;
+    setAllUser: (state, action) => {
+      state.allUser = action.payload.data;
     },
-    setArticle: (state, action) => {
-      state.article = action.payload.data;
-    },
-    setLearnCategory: (state, action) => {
-      state.learnCategory = action.payload.data;
-    },
-    setCoin: (state, action) => {
-      state.coin = action.payload.data;
-    },
-    setCoinCategory: (state, action) => {
-      state.coinCategory = action.payload.data;
+    setAllApplications: (state, action) => {
+      state.allApplication = action.payload.data;
     },
   },
 });

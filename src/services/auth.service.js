@@ -1,6 +1,6 @@
-import axios from "axios";
-import ExpirySession from "../utils/expirysession";
-import Navigation from "./navigation.service";
+import axios from 'axios';
+import ExpirySession from '../utils/expirysession';
+import Navigation from './navigation.service';
 
 class AuthService {
   async doLogin(data) {
@@ -19,7 +19,7 @@ class AuthService {
   async Register(data) {
     return new Promise((resolve, reject) => {
       axios
-        .post("/admin/auth/register", data)
+        .post('/admin/auth/register', data)
         .then((response) => {
           resolve(response);
         })
@@ -32,10 +32,10 @@ class AuthService {
 
 export default new AuthService();
 
-export function Logout(from = "/") {
-  ExpirySession.clear();
+export function Logout(from = '/') {
+  ExpirySession.clear('access');
   const location = {
-    pathname: "/",
+    pathname: '/',
     state: { from },
   };
   Navigation.push(location);

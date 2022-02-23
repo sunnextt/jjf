@@ -2,11 +2,11 @@ import axios from 'axios';
 import authHeader from './auth.header';
 
 class UserService {
-  async getPosts() {
+  async getAllUser() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get('/admin/posts/', config)
+        .get('admin/users', config)
         .then((response) => {
           resolve(response);
         })
@@ -16,11 +16,11 @@ class UserService {
     });
   }
 
-  async addPosts(title, body, image) {
+  async getOneUser(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .post('/admin/posts/', { title, body, image }, config)
+        .get(`/admin/user/${id}`, config)
         .then((response) => {
           resolve(response);
         })
@@ -30,11 +30,13 @@ class UserService {
     });
   }
 
-  async getOnePosts(id) {
+  //Application category
+
+  async getAllApplications() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get(`/admin/posts/${id}`, config)
+        .get('admin/application/all', config)
         .then((response) => {
           resolve(response);
         })
@@ -44,13 +46,11 @@ class UserService {
     });
   }
 
-  //LEARN category
-
-  async addLearncategory() {
+  async updateApplicationStatus(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .post('/admin/learn/category/', config)
+        .get(`/admin/application/status/update/${id}`, config)
         .then((response) => {
           resolve(response);
         })
@@ -59,172 +59,11 @@ class UserService {
         });
     });
   }
-
-  async getAllLearnCategory() {
+  async updateDocumentStatus(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get('/admin/learn/category/all', config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getOneLearnCategory(id) {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`/admin/learn/category/${id}`, config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  //LEARN Post
-
-  async addLearnPosts() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .post('admin/learn/', config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getLearnArticleCategory(id) {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`/admin/learn/category/group/${id}`, config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getAllLearnArticle() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get('/admin/learn/', config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getOneLearnArticle(id) {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`/admin/learn/${id}`, config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  // COIN
-
-  async addCoin() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .post('admin/learn/', config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getCoinCategory(id) {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`/admin/learn/category/group/${id}`, config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getAllCoin() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get('/admin/coin/', config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getOneCoin(id) {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`/admin/coin/${id}`, config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  // Coin Category
-
-  async addCoinCategory() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .post('admin/learn/', config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getAllCoinCategory() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get('/admin/learn/', config)
+        .get(`/admin/application/document/status/update/${id}`, config)
         .then((response) => {
           resolve(response);
         })

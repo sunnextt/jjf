@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -10,26 +10,42 @@ import {
   CHeaderToggler,
   CNavLink,
   CNavItem,
-  CSubheader,
-  CBreadcrumbRouter,
 } from '@coreui/react-pro';
 import CIcon from '@coreui/icons-react';
 import { cilMenu } from '@coreui/icons';
-import { Logout } from 'src/services/auth.service';
 
 import { AppBreadcrumb } from './index';
 
 import { logo } from 'src/assets/brand/logo';
 import { Link } from 'react-router-dom';
+import eventBus from 'src/utils/common/EventBus';
+import { Logout } from 'src/services/auth.service';
+
+const logoutStyles = {
+  textDecoration: 'none',
+  fontSize: '1rem',
+  fontWeight: 'bold'
+};
 
 const AppHeader = () => {
   const dispatch = useDispatch();
   const sidebarShow = useSelector((state) => state.sidebarShow);
   const asideShow = useSelector((state) => state.asideShow);
 
-  const logoutHandler = () => {
-    Logout();
-  };
+  const logOut = useCallback(() => {
+    dispatch(Logout());
+    window.location.reload();
+  }, [dispatch]);
+
+  useEffect(() => {
+    eventBus.on('logout', () => {
+      logOut();
+    });
+
+    return () => {
+      eventBus.remove('logout');
+    };
+  }, [logOut]);
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -54,9 +70,8 @@ const AppHeader = () => {
           <CIcon icon={cilApplicationsSettings} size="lg" />
         </CHeaderToggler> */}
         <div className="mfe-2 c-subheader-nav">
-          <Link className="c-subheader-nav-link" to="#" onClick={logoutHandler}>
-            <CIcon name="cil-account-logout" alt="log out" />
-            &nbsp;Log out
+          <Link style={logoutStyles} to="#" onClick={logOut}>
+            Log out
           </Link>
         </div>
       </CContainer>
