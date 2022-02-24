@@ -37,8 +37,6 @@ const SinglePaymentLog = () => {
       });
   }, []);
 
-  console.log(id);
-  console.log(user);
 
   //   useEffect(() => {
   //     setPayment([application.payment]);

@@ -46,6 +46,20 @@ class UserService {
     });
   }
 
+  async getOneApplications(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`admin/application/${id}`, config)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   async updateApplicationStatus(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {

@@ -37,7 +37,6 @@ const SingleUserDetails = () => {
       });
   }, []);
 
-  console.log(id);
 
   useEffect(() => {
     if (application !== null) {
@@ -63,7 +62,6 @@ const SingleUserDetails = () => {
     { key: 'application_fees' },
   ];
 
-  console.log(payment);
 
   return (
     <div>
@@ -108,9 +106,7 @@ const SingleUserDetails = () => {
                 <CSmartTable
                   columns={columns}
                   items={payment}
-                  // scopedColumns={{
-                  //   created_at: (item) => <td>{formateDate(item.created_at)} </td>,
-                  // }}
+
                 />
               </CCardBody>
             </CCard>
