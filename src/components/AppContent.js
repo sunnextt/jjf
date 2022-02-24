@@ -28,7 +28,6 @@ const AppContent = () => {
               )
             );
           })}
-          <Redirect from="/" to="/dashboard" />
         </Switch>
       </Suspense>
     </CContainer>

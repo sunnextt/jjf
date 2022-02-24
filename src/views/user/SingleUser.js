@@ -1,4 +1,14 @@
-import { CCard, CCardBody, CCardFooter, CCardText, CCardTitle, CCol, CRow, CSmartTable, CTableRow } from '@coreui/react-pro';
+import {
+  CCard,
+  CCardBody,
+  CCardFooter,
+  CCardText,
+  CCardTitle,
+  CCol,
+  CRow,
+  CSmartTable,
+  CTableRow,
+} from '@coreui/react-pro';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import userService from 'src/services/user.service';
@@ -30,22 +40,30 @@ const SingleUserDetails = () => {
   console.log(id);
 
   useEffect(() => {
-    setPayment([application.payment]);
+    if (application !== null) {
+      if (application.payment !== null) {
+        setPayment([application.payment]);
+      } else {
+        setPayment(application.payment);
+        return;
+      }
+    } else {
+      setPayment(application);
+    }
   }, [application]);
 
+  const columns = [
+    { key: 'application_id' },
+    { key: 'payer_name' },
+    { key: 'phone_number' },
+    { key: 'amount' },
+    { key: 'email' },
+    { key: 'payment_date' },
+    { key: 'status' },
+    { key: 'application_fees' },
+  ];
+
   console.log(payment);
-
-    const columns = [
-      { key: 'application_id' },
-      { key: 'payer_name' },
-      { key: 'phone_number' },
-      { key: 'amount' },
-      { key: 'email' },
-      { key: 'payment_date' },
-      { key: 'status' },
-      { key: 'application_fees' },
-    ];
-
 
   return (
     <div>
@@ -83,7 +101,7 @@ const SingleUserDetails = () => {
       </CRow>
       <CRow>
         <CCardTitle style={{ margin: '1rem 0' }}>Payment Info</CCardTitle>
-        {payment ? (
+        {payment !== null ? (
           <CCol>
             <CCard>
               <CCardBody>
@@ -98,12 +116,14 @@ const SingleUserDetails = () => {
             </CCard>
           </CCol>
         ) : (
-          ''
+          <div>
+            <h5>No payment record</h5>
+          </div>
         )}
       </CRow>
       <CCardTitle style={{ margin: '1rem 0' }}>User Application</CCardTitle>
       <CRow>
-        {application ? (
+        {application !== null ? (
           <CCol>
             <CCard>
               <CCardBody style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
@@ -162,28 +182,30 @@ const SingleUserDetails = () => {
         ) : null}
       </CRow>
       <CRow>
-        <CCol>
-          <CCardTitle style={{ margin: '1rem 0' }}>Application Documents</CCardTitle>
-          <CCard>
-            <CCardBody>
-              <CCardText>
-                Funding Reason: <a href={application.funding_reason}>Funding Reason pdf download link</a>
-              </CCardText>
-              <CCardText>
-                Passport: <a href={application.passport}>Passport pdf download link</a>
-              </CCardText>
-              <CCardText>
-                Business Plan: <a href={application.business_plan}>Business Plan pdf download link</a>
-              </CCardText>
-              <CCardText>
-                Proof Of Address: <a href={application.proof_of_address}>Proof Of Address pdf download link</a>
-              </CCardText>
-            </CCardBody>
-          </CCard>
-        </CCol>
+        {application !== null ? (
+          <CCol>
+            <CCardTitle style={{ margin: '1rem 0' }}>Application Documents</CCardTitle>
+            <CCard>
+              <CCardBody>
+                <CCardText>
+                  Funding Reason: <a href={application.funding_reason} target="_blank">Funding Reason pdf download link</a>
+                </CCardText>
+                <CCardText>
+                  Passport: <a href={application.passport}>Passport pdf download link</a>
+                </CCardText>
+                <CCardText>
+                  Business Plan: <a href={application.business_plan}>Business Plan pdf download link</a>
+                </CCardText>
+                <CCardText>
+                  Proof Of Address: <a href={application.proof_of_address}>Proof Of Address pdf download link</a>
+                </CCardText>
+              </CCardBody>
+            </CCard>
+          </CCol>
+        ) : null}
       </CRow>
       <CRow>
-        {application ? (
+        {application !== null ? (
           <CCol>
             <CCardTitle style={{ margin: '1rem 0' }}>guardian/parent Info</CCardTitle>
             <CCard>

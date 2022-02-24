@@ -6,12 +6,6 @@ import { CNavItem } from '@coreui/react-pro'
 const _nav = [
   {
     component: CNavItem,
-    name: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
     name: 'User',
     to: '/user',
     icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
