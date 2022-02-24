@@ -32,3 +32,18 @@ export const fetchAllApplications = () => {
     }
   };
 };
+export const fetchAllPaymentLogs = () => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await UserService.getAllPaymentLogs();
+      return response.data;
+    };
+
+    try {
+      const res = await fetchData();
+      dispatch(dataActions.setAllPaymentLogs({ data: res.data.data }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

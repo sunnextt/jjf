@@ -24,7 +24,7 @@ import { Logout } from 'src/services/auth.service';
 const logoutStyles = {
   textDecoration: 'none',
   fontSize: '1rem',
-  fontWeight: 'bold'
+  fontWeight: 'bold',
 };
 
 const AppHeader = () => {
@@ -63,22 +63,16 @@ const AppHeader = () => {
             </CNavLink>
           </CNavItem>
         </CHeaderNav>
-        {/* <CHeaderToggler
-          className="px-md-0 me-md-3"
-          onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}
-        >
-          <CIcon icon={cilApplicationsSettings} size="lg" />
-        </CHeaderToggler> */}
         <div className="mfe-2 c-subheader-nav">
           <Link style={logoutStyles} to="#" onClick={logOut}>
             Log out
           </Link>
         </div>
       </CContainer>
-      <CHeaderDivider />
-      <CContainer fluid>
-        <AppBreadcrumb />
-      </CContainer>
+      {/* <CHeaderDivider /> */}
+      {/* <CContainer fluid>
+        <CBreadcrumbRouter className="border-0 c-subheader-nav m-0 px-0 px-md-3" routes={routes} />{' '}
+      </CContainer> */}
     </CHeader>
   );
 };

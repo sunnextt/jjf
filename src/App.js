@@ -4,7 +4,7 @@ import { CSpinner } from '@coreui/react-pro';
 import './scss/style.scss';
 import PrivateRouter from './routers/privateRouter';
 import { useDispatch } from 'react-redux';
-import { fetchAllApplications, fetchAllUser } from './store/Data/data-actions';
+import { fetchAllApplications, fetchAllPaymentLogs, fetchAllUser } from './store/Data/data-actions';
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'));
 const Login = React.lazy(() => import('./views/AuthPage/login/Login'));
@@ -15,6 +15,7 @@ const App = () => {
   useEffect(() => {
     dispatch(fetchAllUser());
     dispatch(fetchAllApplications());
+    dispatch(fetchAllPaymentLogs());
   }, [dispatch]);
 
   return (

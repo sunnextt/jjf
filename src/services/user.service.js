@@ -20,9 +20,9 @@ class UserService {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get(`/admin/user/${id}`, config)
+        .get(`admin/user/${id}`, config)
         .then((response) => {
-          resolve(response);
+          resolve(response.data);
         })
         .catch((error) => {
           reject(error);
@@ -66,6 +66,36 @@ class UserService {
         .get(`/admin/application/document/status/update/${id}`, config)
         .then((response) => {
           resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  //payment logs
+
+  async getAllPaymentLogs() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get('admin/application/payment/logs', config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async getPaymentLogs(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`admin/application/payment/log/${id}`, config)
+        .then((response) => {
+          resolve(response.data);
         })
         .catch((error) => {
           reject(error);

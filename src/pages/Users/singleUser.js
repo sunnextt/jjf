@@ -23,7 +23,6 @@ const SingleUser = (props) => {
     <>
       <CRow>
         <CCol>
-          {" "}
           <CCard>
             <CCardBody>
               <CRow>

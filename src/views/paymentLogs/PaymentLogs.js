@@ -4,27 +4,26 @@ import { useSelector } from 'react-redux';
 import { formateDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
 
-const Application = () => {
-  const { allApplication } = useSelector((state) => state.data);
+const PaymentLogs = () => {
+  const { paymentLogs: data } = useSelector((state) => state.data);
 
   const [usersData, setUsersData] = useState({});
 
   useEffect(() => {
-    if (allApplication) {
-      setUsersData(allApplication);
+    if (data) {
+      setUsersData(data);
     }
-  }, [allApplication]);
+  }, [data]);
 
   const columns = [
-    { key: 'id_number' },
-    { key: 'firstname' },
-    { key: 'lastname' },
-    { key: 'phone' },
+    { key: 'application_id' },
+    { key: 'payer_name' },
+    { key: 'amount' },
+    { key: 'payment_reference_no' },
     // { key: 'email' },
-    { key: 'amount_needed' },
-    { key: 'application_status' },
-    { key: 'payment_status' },
-    { key: 'created_at' },
+    { key: 'payment_date' },
+    { key: 'application_fees' },
+    { key: 'status', _style: { width: '10%' } },
     {
       key: 'show_details',
       label: '',
@@ -56,18 +55,17 @@ const Application = () => {
         tableFilter
         cleaner
         itemsPerPageSelect
-        columnSorter
+        // columnSorter
         items={usersData}
         itemsPerPage={10}
         pagination
         scopedColumns={{
           created_at: (item) => <td>{formateDate(item.created_at)} </td>,
-          show_details: (item) => {
-            console.log(item.id);
+          show_details: ({ id }) => {
             return (
               <td className="py-2">
-                <Link to={`/application/${item.id}`} color="primary" variant="outline" shape="square" size="sm">
-                  {item.id && 'show details'}
+                <Link to={`/payment-logs/${id}`} color="primary" variant="outline" shape="square" size="sm">
+                  {id && 'show details'}
                 </Link>
               </td>
             );
@@ -78,4 +76,4 @@ const Application = () => {
   );
 };
 
-export default Application;
+export default PaymentLogs;

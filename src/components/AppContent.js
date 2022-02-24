@@ -1,9 +1,10 @@
-import React, { Suspense } from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
-import { CContainer, CSpinner } from '@coreui/react-pro'
+import React, { Suspense } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { CContainer, CSpinner } from '@coreui/react-pro';
+const SingleUserDetails = React.lazy(() => import('../views/user/SingleUser'));
 
 // routes config
-import routes from '../routes'
+import routes from '../routes';
 
 const AppContent = () => {
   return (
@@ -25,13 +26,13 @@ const AppContent = () => {
                   )}
                 />
               )
-            )
+            );
           })}
           <Redirect from="/" to="/dashboard" />
         </Switch>
       </Suspense>
     </CContainer>
-  )
-}
+  );
+};
 
-export default React.memo(AppContent)
+export default React.memo(AppContent);

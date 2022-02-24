@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   allUser: null,
   allApplication: null,
+  paymentLogs: null,
 };
 
 const dataSlice = createSlice({
@@ -14,6 +15,9 @@ const dataSlice = createSlice({
     },
     setAllApplications: (state, action) => {
       state.allApplication = action.payload.data;
+    },
+    setAllPaymentLogs: (state, action) => {
+      state.paymentLogs = action.payload.data;
     },
   },
 });

@@ -22,6 +22,12 @@ const _nav = [
     to: '/application',
     icon: <CIcon icon={cilApplications} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: 'Payment Logs',
+    to: '/payment-logs',
+    icon: <CIcon icon={cilApplications} customClassName="nav-icon" />,
+  },
 ];
 
 export default _nav
