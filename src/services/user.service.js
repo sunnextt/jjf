@@ -73,13 +73,18 @@ class UserService {
         });
     });
   }
-  async updateDocumentStatus(id) {
+  async updateDocumentStatus(id, document_status) {
+    console.log(id, "doc",document_status);
+
     const config = await authHeader();
+    var data = new FormData();
+    data.append('document_status', document_status);
+
     return new Promise((resolve, reject) => {
       axios
-        .get(`/admin/application/document/status/update/${id}`, config)
+        .post(`/admin/application/document/status/update/${id}`, data, config)
         .then((response) => {
-          resolve(response);
+          resolve(response).data;
         })
         .catch((error) => {
           reject(error);

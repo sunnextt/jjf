@@ -1,15 +1,23 @@
 import {
+  CButton,
   CCard,
   CCardBody,
   CCardFooter,
   CCardText,
   CCardTitle,
   CCol,
+  CCollapse,
+  CDropdown,
+  CDropdownItem,
+  CDropdownMenu,
+  CDropdownToggle,
   CRow,
   CSmartTable,
   CTableRow,
 } from '@coreui/react-pro';
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import userService from 'src/services/user.service';
 import { formateDate } from 'src/utils/formatDate';
@@ -21,11 +29,15 @@ const styles = {
 
 const SingleApplication = () => {
   const { id } = useParams();
-  const [data, setData] = React.useState('');
-  const [user, setUser] = React.useState('');
-  const [documents, setDocuments] = React.useState('');
-  const [business, setBusiness] = React.useState('');
-  const [payment, setPayment] = React.useState('');
+  const [loading, setLoading] = useState(false);
+  const [details, setDetails] = useState([]);
+  const [data, setData] = useState('');
+  const [user, setUser] = useState('');
+  const [documents, setDocuments] = useState('');
+  const [business, setBusiness] = useState('');
+  const [payment, setPayment] = useState('');
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     userService
@@ -44,19 +56,33 @@ const SingleApplication = () => {
       });
   }, []);
 
-  console.log('data:', data);
-  console.log('user:', user);
-  console.log('documents:', documents);
-  console.log('business:', business);
-  console.log('payment:', payment);
-
   const columns = [
     { key: 'document_type' },
     { key: 'document' },
     { key: 'document_status' },
     { key: 'created_at' },
     { key: 'updated_at' },
+    {
+      key: 'show_details',
+      label: '',
+      _style: { width: '1%' },
+      filter: false,
+      sorter: false,
+      _props: { color: 'primary', className: 'fw-semibold' },
+    },
   ];
+
+  const toggleDetails = (index) => {
+    const position = details.indexOf(index);
+    let newDetails = details.slice();
+    if (position !== -1) {
+      newDetails.splice(position, 1);
+    } else {
+      newDetails = [...details, index];
+    }
+    setDetails(newDetails);
+  };
+
   const busColumns = [
     { key: 'application_id' },
     { key: 'business_name' },
@@ -75,10 +101,67 @@ const SingleApplication = () => {
     { key: 'application_fees' },
   ];
 
+  const getBadge = (status) => {
+    switch (status) {
+      case 'Active':
+        return 'success';
+      case 'Inactive':
+        return 'secondary';
+      case 'Pending':
+        return 'warning';
+      case 'Banned':
+        return 'danger';
+      default:
+        return 'primary';
+    }
+  };
+
+  const notify = (message) => toast(message);
+
+  const handleClick = (key) => {
+    setLoading(true);
+
+    console.log(key);
+
+    let document_status;
+
+    if (key === 1) {
+      document_status = 'Approved';
+    } else if (key === 2) {
+      document_status = 'In review';
+    } else if (key === 3) {
+      document_status = 'Rejected';
+    } else return document_status;
+
+    console.log(document_status);
+
+    userService
+      .updateDocumentStatus(id, document_status)
+      .then(({ data }) => {
+        console.log(data);
+        setLoading(false);
+        notify(data.message)
+      })
+      .catch((error) => {
+        setLoading(false);
+        // console.log(error);
+      });
+  };
+
   return (
     <div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />                 
       <CCardTitle>Application Details</CCardTitle>
-
       <CRow>
         {user ? (
           <CCol xs>
@@ -155,6 +238,40 @@ const SingleApplication = () => {
                       ),
                       created_at: (item) => <td>{formateDate(item.created_at)} </td>,
                       updated_at: (item) => <td>{formateDate(item.updated_at)} </td>,
+                      show_details: (item) => {
+                        return (
+                          <td className="py-2">
+                            <CButton
+                              color="primary"
+                              variant="outline"
+                              shape="square"
+                              size="sm"
+                              onClick={() => {
+                                toggleDetails(item._id);
+                              }}
+                            >
+                              {details.includes(item._id) ? 'Hide' : 'update status'}
+                            </CButton>
+                          </td>
+                        );
+                      },
+                      details: (item) => {
+                        return (
+                          <CCollapse visible={details.includes(item._id)}>
+                            <CCardBody>
+                              <h4>Update Status</h4>
+                              <CDropdown>
+                                <CDropdownToggle color="secondary">Select Status</CDropdownToggle>
+                                <CDropdownMenu>
+                                  <CDropdownItem onClick={() => handleClick(1)}>Approved</CDropdownItem>
+                                  <CDropdownItem onClick={() => handleClick(2)}>In rewiew </CDropdownItem>
+                                  <CDropdownItem onClick={() => handleClick(3)}>Rejected</CDropdownItem>
+                                </CDropdownMenu>
+                              </CDropdown>
+                            </CCardBody>
+                          </CCollapse>
+                        );
+                      },
                     }}
                   />
                 </CCardBody>

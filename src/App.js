@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { CSpinner } from '@coreui/react-pro';
 import './scss/style.scss';
+import 'react-toastify/dist/ReactToastify.css';
 import PrivateRouter from './routers/privateRouter';
 import { useDispatch } from 'react-redux';
 import { fetchAllApplications, fetchAllPaymentLogs, fetchAllUser } from './store/Data/data-actions';
