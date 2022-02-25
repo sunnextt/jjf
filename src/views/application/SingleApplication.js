@@ -125,22 +125,54 @@ const SingleApplication = () => {
 
     let document_status;
 
-    if (key === 1) {
+    if (key.id === 1) {
       document_status = 'Approved';
-    } else if (key === 2) {
+    } else if (key.id === 2) {
       document_status = 'In review';
-    } else if (key === 3) {
+    } else if (key.id === 3) {
       document_status = 'Rejected';
     } else return document_status;
 
-    console.log(document_status);
+    console.log(documents);
 
     userService
-      .updateDocumentStatus(id, document_status)
+      .updateDocumentStatus(key._id, document_status)
       .then(({ data }) => {
         console.log(data);
         setLoading(false);
-        notify(data.message)
+        notify(data.message);
+        window.location.reload();
+      })
+      .catch((error) => {
+        setLoading(false);
+        // console.log(error);
+      });
+  };
+
+  const handleAppUpdate = (key) => {
+    setLoading(true);
+
+    console.log(key);
+
+    let application_status;
+
+    if (key.id === 1) {
+      application_status = 'Approved';
+    } else if (key.id === 2) {
+      application_status = 'In review';
+    } else if (key.id === 3) {
+      application_status = 'Incomplete';
+    } else if (key.id === 4) {
+      application_status = 'Rejected';
+    } else return application_status;
+
+    userService
+      .updateApplicationStatus(key._id, application_status)
+      .then(({ data }) => {
+        console.log(data);
+        setLoading(false);
+        notify(data.message);
+        window.location.reload();
       })
       .catch((error) => {
         setLoading(false);
@@ -160,7 +192,7 @@ const SingleApplication = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />                 
+      />
       <CCardTitle>Application Details</CCardTitle>
       <CRow>
         {user ? (
@@ -184,6 +216,43 @@ const SingleApplication = () => {
                 <CCardText>
                   Role: <span style={styles}>{user.role}</span>
                 </CCardText>
+                <CCardText>
+                  Application Status: <span style={styles}>{data.application_status}</span>
+                </CCardText>
+                <h5>Update Application Status</h5>
+                <CDropdown>
+                  <CDropdownToggle color="secondary">Select Status</CDropdownToggle>
+                  <CDropdownMenu>
+                    <CDropdownItem
+                      onClick={() => {
+                        handleAppUpdate({ id: 1, _id: data.id });
+                      }}
+                    >
+                      Approved
+                    </CDropdownItem>
+                    <CDropdownItem
+                      onClick={() => {
+                        handleAppUpdate({ id: 2, _id: data.id });
+                      }}
+                    >
+                      In review
+                    </CDropdownItem>
+                    <CDropdownItem
+                      onClick={() => {
+                        handleAppUpdate({ id: 3, _id: data.id });
+                      }}
+                    >
+                      Incomplete
+                    </CDropdownItem>
+                    <CDropdownItem
+                      onClick={() => {
+                        handleAppUpdate({ id: 4, _id: data.id });
+                      }}
+                    >
+                      Rejected
+                    </CDropdownItem>
+                  </CDropdownMenu>
+                </CDropdown>
               </CCardBody>
               <CCardFooter style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <small className="text-medium-emphasis">Created at: {formateDate(user.created_at)}</small>
@@ -263,9 +332,27 @@ const SingleApplication = () => {
                               <CDropdown>
                                 <CDropdownToggle color="secondary">Select Status</CDropdownToggle>
                                 <CDropdownMenu>
-                                  <CDropdownItem onClick={() => handleClick(1)}>Approved</CDropdownItem>
-                                  <CDropdownItem onClick={() => handleClick(2)}>In rewiew </CDropdownItem>
-                                  <CDropdownItem onClick={() => handleClick(3)}>Rejected</CDropdownItem>
+                                  <CDropdownItem
+                                    onClick={() => {
+                                      handleClick({ id: 1, _id: item.id });
+                                    }}
+                                  >
+                                    Approved
+                                  </CDropdownItem>
+                                  <CDropdownItem
+                                    onClick={() => {
+                                      handleClick({ id: 2, _id: item.id });
+                                    }}
+                                  >
+                                    In review
+                                  </CDropdownItem>
+                                  <CDropdownItem
+                                    onClick={() => {
+                                      handleClick({ id: 3, _id: item.id });
+                                    }}
+                                  >
+                                    Rejected
+                                  </CDropdownItem>
                                 </CDropdownMenu>
                               </CDropdown>
                             </CCardBody>

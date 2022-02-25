@@ -60,11 +60,16 @@ class UserService {
     });
   }
 
-  async updateApplicationStatus(id) {
+  async updateApplicationStatus(id, application_status) {
+    console.log(id, 'doc', application_status);
+
     const config = await authHeader();
+    var data = new FormData();
+    data.append('application_status', application_status);
+
     return new Promise((resolve, reject) => {
       axios
-        .get(`/admin/application/status/update/${id}`, config)
+        .post(`/admin/application/status/update/${id}`, data, config)
         .then((response) => {
           resolve(response);
         })
@@ -74,8 +79,6 @@ class UserService {
     });
   }
   async updateDocumentStatus(id, document_status) {
-    console.log(id, "doc",document_status);
-
     const config = await authHeader();
     var data = new FormData();
     data.append('document_status', document_status);
