@@ -21,6 +21,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import userService from 'src/services/user.service';
 import { formateDate } from 'src/utils/formatDate';
+import { CDataTable } from '@coreui/react';
 
 const styles = {
   fontWeight: 'bold',
@@ -48,7 +49,7 @@ const SingleApplication = () => {
           setDocuments(data.documents);
           setUser(data.user);
           setBusiness([data.business]);
-          setPayment([data.payment]);
+          setPayment(data.payment);
         }
       })
       .catch((error) => {
@@ -121,8 +122,6 @@ const SingleApplication = () => {
   const handleClick = (key) => {
     setLoading(true);
 
-    console.log(key);
-
     let document_status;
 
     if (key.id === 1) {
@@ -132,8 +131,6 @@ const SingleApplication = () => {
     } else if (key.id === 3) {
       document_status = 'Rejected';
     } else return document_status;
-
-    console.log(documents);
 
     userService
       .updateDocumentStatus(key._id, document_status)
@@ -196,8 +193,8 @@ const SingleApplication = () => {
       <CCardTitle>Application Details</CCardTitle>
       <CRow>
         {user ? (
-          <CCol xs>
-            <CCard style={{ margin: '1rem 0', width: '50%' }}>
+          <CCol xs="12" sm="12" md="6" lg="6">
+            <CCard style={{ margin: '1rem 0' }}>
               <CCardBody>
                 <CCardText>
                   First Name:
@@ -265,14 +262,16 @@ const SingleApplication = () => {
       <div>
         <CCardTitle style={{ margin: '1rem 0' }}>Payment Details</CCardTitle>
         <CRow>
-          {payColumns ? (
+          {payment ? (
             <CCol xs>
               <CCard>
                 <CCardBody>
-                  <CSmartTable
-                    columns={payColumns}
+                  <CDataTable
                     items={payment}
-                    scopedColumns={{
+                    fields={payColumns}
+                    hover
+                    // items-per-page-select
+                    scopedSlots={{
                       document: (item) => (
                         <td>
                           <a href={item.document}>Document download link</a>
@@ -296,10 +295,11 @@ const SingleApplication = () => {
             <CCol xs>
               <CCard>
                 <CCardBody>
-                  <CSmartTable
-                    columns={columns}
+                  <CDataTable
                     items={documents}
-                    scopedColumns={{
+                    fields={columns}
+                    hover
+                    scopedSlots={{
                       document: (item) => (
                         <td>
                           <a href={item.document}>Document download link</a>
@@ -375,10 +375,12 @@ const SingleApplication = () => {
             <CCol xs>
               <CCard>
                 <CCardBody>
-                  <CSmartTable
-                    columns={busColumns}
+                  S{' '}
+                  <CDataTable
                     items={business}
-                    scopedColumns={{
+                    fields={busColumns}
+                    hover
+                    scopedSlots={{
                       created_at: (item) => <td>{formateDate(item.created_at)} </td>,
                       updated_at: (item) => <td>{formateDate(item.updated_at)} </td>,
                     }}
