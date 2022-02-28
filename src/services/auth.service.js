@@ -8,7 +8,7 @@ class AuthService {
       axios
         .post('user/login', data)
         .then((response) => {
-          resolve(response);
+          resolve(response.data);
         })
         .catch((error) => {
           reject(error);
@@ -39,5 +39,4 @@ export function Logout(from = '/') {
     state: { from },
   };
   Navigation.push(location);
-  window.location.reload();
 }

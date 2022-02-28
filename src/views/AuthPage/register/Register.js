@@ -88,7 +88,7 @@ const Register = () => {
 
 
   //background color from global store
-  const backgroundColor = useSelector((state) => state.UI.backgroundColor);
+    const { backgroundColor } = useSelector((state) => state.changeState);
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">

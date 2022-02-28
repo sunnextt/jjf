@@ -3,17 +3,10 @@ import { CCardBody, CButton, CSmartTable } from '@coreui/react-pro';
 import { useSelector } from 'react-redux';
 import { formateDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
+import { CDataTable } from '@coreui/react';
 
 const User = () => {
   const { allUser } = useSelector((state) => state.data);
-
-  const [usersData, setUsersData] = useState({});
-
-  useEffect(() => {
-    if (allUser) {
-      setUsersData(allUser);
-    }
-  }, [allUser]);
 
   const columns = [
     { key: 'first_name' },
@@ -46,30 +39,41 @@ const User = () => {
     }
   };
 
+  
+  const styled = {
+    textDecoration: 'none',
+    padding: '5px 10px',
+    border: 'none',
+    borderRadius: '8px',
+    border: '1px solid blue',
+  };
+
   return (
     <CCardBody>
-        <CSmartTable
-          columns={columns}
+      {allUser && (
+        <CDataTable
+          items={allUser}
+          fields={columns}
+          items-per-page-select
+          items-per-page="15"
+          pagination
+          hover
           tableFilter
           cleaner
-          itemsPerPageSelect
-          columnSorter
-          items={usersData}
-          itemsPerPage={10}
-          pagination
-          scopedColumns={{
+          scopedSlots={{
             created_at: (item) => <td>{formateDate(item.created_at)} </td>,
             show_details: ({ id }) => {
               return (
                 <td className="py-2">
-                  <Link to={`/user/${id}`} color="primary" variant="outline" shape="square" size="sm">
-                    {id && 'show details'}
+                  <Link to={`/user/${id}`} color="primary" variant="outline" shape="square" size="sm" style={styled}>
+                    {id && 'details'}
                   </Link>
                 </td>
               );
             },
           }}
         />
+      )}
     </CCardBody>
   );
 };

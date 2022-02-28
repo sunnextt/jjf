@@ -1,34 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-const initialUIState = {
-  sidebarShow: "responsive",
+const initialState = {
+  sidebarShow: true,
   asideShow: false,
-  darkMode: false,
-  backgroundColor: "#7371fc",
+  theme: 'default',
+  backgroundColor: '#7371fc',
 };
 
-const uiSlice = createSlice({
-  name: "UI",
-  initialState: initialUIState,
-  reducers: {
-    toggleSidebar: (state) => {
-      const val = [true, "responsive"].includes(state.sidebarShow)
-        ? false
-        : "responsive";
-      state.sidebarShow = val;
-    },
-    toggleSidebarMobile: (state) => {
-      const val = [false, "responsive"].includes(state.sidebarShow)
-        ? true
-        : "responsive";
-      state.sidebarShow = val;
-    },
-    toggleMode: (state) => {
-      state.darkMode = !state.darkMode;
-    },
-  },
-});
+const changeState = (state = initialState, { type, ...rest }) => {
+  switch (type) {
+    case 'set':
+      return { ...state, ...rest };
+    default:
+      return state;
+  }
+};
 
-export const uiActions = uiSlice.actions;
-
-export default uiSlice;
+export default changeState;

@@ -3,17 +3,18 @@ import { CCardBody, CButton, CSmartTable } from '@coreui/react-pro';
 import { useSelector } from 'react-redux';
 import { formateDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
+import { CDataTable } from '@coreui/react';
 
 const Application = () => {
   const { allApplication } = useSelector((state) => state.data);
 
-  const [usersData, setUsersData] = useState({});
+  // const [usersData, setUsersData] = useState({});
 
-  useEffect(() => {
-    if (allApplication) {
-      setUsersData(allApplication);
-    }
-  }, [allApplication]);
+  // useEffect(() => {
+  //   if (allApplication) {
+  //     setUsersData(allApplication);
+  //   }
+  // }, [allApplication]);
 
   const columns = [
     { key: 'id_number' },
@@ -49,31 +50,47 @@ const Application = () => {
     }
   };
 
+  const styled = {
+    textDecoration: 'none',
+    padding: '5px 10px',
+    border: 'none',
+    borderRadius: '8px',
+    border: '1px solid blue',
+  };
   return (
     <CCardBody>
-      <CSmartTable
-        columns={columns}
-        tableFilter
-        cleaner
-        itemsPerPageSelect
-        columnSorter
-        items={usersData}
-        itemsPerPage={10}
-        pagination
-        scopedColumns={{
-          created_at: (item) => <td>{formateDate(item.created_at)} </td>,
-          show_details: (item) => {
-            console.log(item.id);
-            return (
-              <td className="py-2">
-                <Link to={`/application/${item.id}`} color="primary" variant="outline" shape="square" size="sm">
-                  {item.id && 'show details'}
-                </Link>
-              </td>
-            );
-          },
-        }}
-      />
+      {allApplication && (
+        <CDataTable
+          items={allApplication}
+          fields={columns}
+          items-per-page-select
+          items-per-page="15"
+          pagination
+          hover
+          tableFilter
+          cleaner
+          scopedSlots={{
+            created_at: (item) => <td>{formateDate(item.created_at)} </td>,
+            show_details: (item) => {
+              console.log(item.id);
+              return (
+                <td className="py-2">
+                  <Link
+                    to={`/application/${item.id}`}
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                    style={styled}
+                  >
+                    {item.id && 'details'}
+                  </Link>
+                </td>
+              );
+            },
+          }}
+        />
+      )}
     </CCardBody>
   );
 };

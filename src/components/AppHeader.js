@@ -12,7 +12,7 @@ import {
   CNavItem,
 } from '@coreui/react-pro';
 import CIcon from '@coreui/icons-react';
-import { cilMenu } from '@coreui/icons';
+import { cilApplicationsSettings, cilMenu } from '@coreui/icons';
 
 import { AppBreadcrumb } from './index';
 
@@ -29,11 +29,11 @@ const logoutStyles = {
 
 const AppHeader = () => {
   const dispatch = useDispatch();
-  const sidebarShow = useSelector((state) => state.sidebarShow);
-  const asideShow = useSelector((state) => state.asideShow);
+  const { sidebarShow } = useSelector((state) => state.changeState);
+  const { asideShow } = useSelector((state) => state.changeState);
 
   const logOut = useCallback(() => {
-    dispatch(Logout());
+    Logout();
     window.location.reload();
   }, [dispatch]);
 
@@ -63,16 +63,15 @@ const AppHeader = () => {
             </CNavLink>
           </CNavItem>
         </CHeaderNav>
+        <CHeaderToggler className="px-md-0 me-md-3" onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}>
+          <CIcon icon={cilApplicationsSettings} size="lg" />
+        </CHeaderToggler>
         <div className="mfe-2 c-subheader-nav">
           <Link style={logoutStyles} to="#" onClick={logOut}>
             Log out
           </Link>
         </div>
       </CContainer>
-      {/* <CHeaderDivider /> */}
-      {/* <CContainer fluid>
-        <CBreadcrumbRouter className="border-0 c-subheader-nav m-0 px-0 px-md-3" routes={routes} />{' '}
-      </CContainer> */}
     </CHeader>
   );
 };

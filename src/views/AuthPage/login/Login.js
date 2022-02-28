@@ -1,8 +1,8 @@
 import React from 'react';
 import Logo from 'src/assets/icons/TokenPicks/TokenpicksLogo.png';
-import AuthService from '../../../services/auth.service';
+import AuthService, { Logout } from '../../../services/auth.service';
 import ExpirySession from '../../../utils/expirysession';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import {
@@ -30,6 +30,7 @@ const Login = (props) => {
   const [formIsValid, setFormIsValid] = React.useState(false);
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const dispatch = useDispatch();
 
   const [state, setState] = React.useState({
     email: '',
@@ -62,13 +63,20 @@ const Login = (props) => {
     const { email, password } = state;
 
     AuthService.doLogin({ email, password })
-      .then((res) => {
+      .then(({ data }) => {
         setLoading(false);
-        ExpirySession.set('access', res.data.data);
+        console.log(data);
+        if (data.role !== 'Admin') {
+          setError('You must be a admin to login');
+          dispatch(Logout());
+          return;
+        }
+        ExpirySession.set('access', data);
         history.push('/');
         window.location.reload();
       })
       .catch((error) => {
+        setLoading(false);
         if (error.response) {
           setError(error.response.data.detail || error.response.data.message);
         }
@@ -80,7 +88,7 @@ const Login = (props) => {
   }, [state]);
 
   //background color from global store
-  const backgroundColor = useSelector((state) => state.UI.backgroundColor);
+  const { backgroundColor } = useSelector((state) => state.changeState);
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
@@ -119,8 +127,8 @@ const Login = (props) => {
                         onChange={inputChangedHandler}
                       />
                     </CInputGroup>
-                    <CRow className="p-0 m-0">
-                      <CCol xs="6" className="p-0 m-0">
+                    <CRow className="p-0 m-0 justify-content-center">
+                      <CCol xs className="p-0 m-0">
                         {error && <p style={{ color: 'tomato' }}>{error}</p>}
                       </CCol>
                     </CRow>
@@ -133,17 +141,12 @@ const Login = (props) => {
                           }}
                           className="px-3"
                           type="submit"
-                          disabled={!formIsValid}
+                          disabled={!formIsValid || loading}
                         >
                           {loading && <CSpinner size="sm" />}
                           <span className="ml-2">Login</span>
                         </CButton>
                       </CCol>
-                      {/* <div>
-                        <h6 style={{margin: "1rem", }}>
-                          Dont have an account ? <Link style={{textDecoration: "none"}} to="/register">Register</Link>
-                        </h6>
-                      </div> */}
                     </CRow>
                   </CForm>
                 </CCardBody>

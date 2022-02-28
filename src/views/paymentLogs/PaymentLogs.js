@@ -3,17 +3,10 @@ import { CCardBody, CButton, CSmartTable } from '@coreui/react-pro';
 import { useSelector } from 'react-redux';
 import { formateDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
+import { CDataTable } from '@coreui/react';
 
 const PaymentLogs = () => {
   const { paymentLogs: data } = useSelector((state) => state.data);
-
-  const [usersData, setUsersData] = useState({});
-
-  useEffect(() => {
-    if (data) {
-      setUsersData(data);
-    }
-  }, [data]);
 
   const columns = [
     { key: 'application_id' },
@@ -48,32 +41,49 @@ const PaymentLogs = () => {
     }
   };
 
+  const styled = {
+    textDecoration: 'none',
+    padding: '5px 10px',
+    border: 'none',
+    borderRadius: '8px',
+    border: '1px solid blue',
+  };
   return (
     <CCardBody>
-      <CSmartTable
-        columns={columns}
-        tableFilter
-        cleaner
-        itemsPerPageSelect
-        // columnSorter
-        items={usersData}
-        itemsPerPage={10}
-        pagination
-        scopedColumns={{
-          created_at: (item) => <td>{formateDate(item.created_at)} </td>,
-          show_details: ({ id }) => {
-            return (
-              <td className="py-2">
-                <Link to={`/payment-logs/${id}`} color="primary" variant="outline" shape="square" size="sm">
-                  {id && 'show details'}
-                </Link>
-              </td>
-            );
-          },
-        }}
-      />
+      {data && (
+        <CDataTable
+          items={data}
+          fields={columns}
+          items-per-page-select
+          hover
+          tableFilter
+          cleaner
+          scopedSlots={{
+            show_details: ({ id }) => {
+              return (
+                <td className="py-2">
+                  <Link
+                    to={`/payment-logs/${id}`}
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                    style={styled}
+                  >
+                    {id && 'Details'}
+                  </Link>
+                </td>
+              );
+            },
+          }}
+        />
+      )}
     </CCardBody>
   );
 };
 
 export default PaymentLogs;
+
+// <Link to={`/payment-logs/${id}`} color="primary" variant="outline" shape="square" size="sm">
+//   {id && 'show details'}
+// </Link>

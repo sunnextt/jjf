@@ -1,41 +1,29 @@
-@font-face {
-  font-family: mazzardH;
-  src: url(assets/fonts/mazzardH/MazzardH-Light.otf);
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: mazzardH;
-  src: url(assets/fonts/mazzardH/MazzardH-Regular.otf);
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: mazzardH;
-  src: url(assets/fonts/mazzardH/MazzardH-ExtraLight.otf);
-  font-weight: 200;
-}
-
-@font-face {
-  font-family: mazzardH;
-  src: url(assets/fonts/mazzardH/MazzardH-Medium.otf);
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: mazzardH;
-  src: url(assets/fonts/mazzardH/MazzardH-SemiBold.otf);
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: mazzardH;
-  src: url(assets/fonts/mazzardH/MazzardH-Bold.otf);
-  font-weight: 800;
-}
-
 body {
-  font-family: mazzardH;
+  font-family: 'Lato', sans-serif !important;
 }
 
+h1 .h1 {
+  font-family: 'Lato', sans-serif !important;
+}
+h2 .h2 {
+  font-family: 'Lato', sans-serif !important;
+}
 
+h3 .h3 {
+  font-family: 'Lato', sans-serif !important;
+}
+
+h4 .h4 {
+  font-family: 'Lato', sans-serif !important;
+}
+
+h5 .h5 {
+  font-family: 'Lato', sans-serif !important;
+}
+h6 .h6 {
+  font-family: 'Lato', sans-serif !important;
+}
+
+p .h6 {
+  font-family: 'Lato', sans-serif !important;
+}
