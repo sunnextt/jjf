@@ -72,7 +72,6 @@ const Application = () => {
           scopedSlots={{
             created_at: (item) => <td>{formateDate(item.created_at)} </td>,
             show_details: (item) => {
-              console.log(item.id);
               return (
                 <td className="py-2">
                   <Link

@@ -32,17 +32,8 @@ const SinglePaymentLog = () => {
         setUser(data);
         setApplication(data.application);
       })
-      .catch((error) => {
-        // console.log(error);
-      });
+      .catch(() => {});
   }, []);
-
-
-  //   useEffect(() => {
-  //     setPayment([application.payment]);
-  //   }, [application]);
-
-  //   console.log(payment);
 
   const columns = [
     { key: 'application_id' },

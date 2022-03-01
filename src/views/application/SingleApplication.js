@@ -12,11 +12,9 @@ import {
   CDropdownMenu,
   CDropdownToggle,
   CRow,
-  CSmartTable,
-  CTableRow,
 } from '@coreui/react-pro';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import userService from 'src/services/user.service';
@@ -38,7 +36,7 @@ const SingleApplication = () => {
   const [business, setBusiness] = useState('');
   const [payment, setPayment] = useState('');
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   React.useEffect(() => {
     userService
@@ -52,10 +50,8 @@ const SingleApplication = () => {
           setPayment(data.payment);
         }
       })
-      .catch((error) => {
-        // console.log(error);
-      });
-  }, []);
+      .catch(() => {});
+  }, [data]);
 
   const columns = [
     { key: 'document_type' },
@@ -135,22 +131,16 @@ const SingleApplication = () => {
     userService
       .updateDocumentStatus(key._id, document_status)
       .then(({ data }) => {
-        console.log(data);
         setLoading(false);
         notify(data.message);
-        window.location.reload();
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
-        // console.log(error);
       });
   };
 
   const handleAppUpdate = (key) => {
     setLoading(true);
-
-    console.log(key);
-
     let application_status;
 
     if (key.id === 1) {
@@ -166,14 +156,11 @@ const SingleApplication = () => {
     userService
       .updateApplicationStatus(key._id, application_status)
       .then(({ data }) => {
-        console.log(data);
         setLoading(false);
         notify(data.message);
-        window.location.reload();
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
-        // console.log(error);
       });
   };
 
@@ -316,17 +303,17 @@ const SingleApplication = () => {
                               shape="square"
                               size="sm"
                               onClick={() => {
-                                toggleDetails(item._id);
+                                toggleDetails(item.id);
                               }}
                             >
-                              {details.includes(item._id) ? 'Hide' : 'update status'}
+                              {details.includes(item.id) ? 'Hide' : 'update status'}
                             </CButton>
                           </td>
                         );
                       },
                       details: (item) => {
                         return (
-                          <CCollapse visible={details.includes(item._id)}>
+                          <CCollapse visible={details.includes(item.id)}>
                             <CCardBody>
                               <h4>Update Status</h4>
                               <CDropdown>
