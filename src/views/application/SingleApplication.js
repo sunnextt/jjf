@@ -51,7 +51,9 @@ const SingleApplication = () => {
         }
       })
       .catch(() => {});
-  }, [data]);
+    if ((user, documents)) {
+    }
+  }, [data, user, documents]);
 
   const columns = [
     { key: 'document_type' },
