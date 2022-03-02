@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from 'src/assets/icons/TokenPicks/TokenpicksLogo.png';
+import Logo from 'src/assets/icons/TokenPicks/tred-logo.png';
 import AuthService, { Logout } from '../../../services/auth.service';
 import ExpirySession from '../../../utils/expirysession';
 import { useDispatch, useSelector } from 'react-redux';
