@@ -43,17 +43,22 @@ const SingleApplication = () => {
       .getOneApplications(id)
       .then(({ data }) => {
         setData(data);
-        if (data) {
-          setDocuments(data.documents);
-          setUser(data.user);
-          setBusiness([data.business]);
-          setPayment(data.payment);
-        }
+        setDocuments(data.documents);
+        setUser(data.user);
+        setBusiness([data.business]);
+        setPayment([data.payment]);
       })
       .catch(() => {});
-    if ((user, documents)) {
-    }
-  }, [data, user, documents]);
+  }, []);
+
+  // React.useEffect(() => {
+  //   if (data) {
+  //     setDocuments(data.documents);
+  //     setUser(data.user);
+  //     setBusiness([data.business]);
+  //     setPayment([data.payment]);
+  //   }
+  // }, [data]);
 
   const columns = [
     { key: 'document_type' },
@@ -133,6 +138,10 @@ const SingleApplication = () => {
       .then(({ data }) => {
         setLoading(false);
         notify(data.message);
+        const currentDocuments = [...documents];
+        const currentDoc = currentDocuments.find((doc) => doc.id === key._id);
+        currentDoc.document_status = document_status;
+        setDocuments(currentDocuments);
       })
       .catch(() => {
         setLoading(false);
@@ -153,6 +162,8 @@ const SingleApplication = () => {
       application_status = 'Rejected';
     } else return application_status;
 
+    setData({ ...data, application_status });
+
     userService
       .updateApplicationStatus(key._id, application_status)
       .then(({ data }) => {
@@ -163,6 +174,8 @@ const SingleApplication = () => {
         setLoading(false);
       });
   };
+
+  // console.log(payment);
 
   return (
     <div>

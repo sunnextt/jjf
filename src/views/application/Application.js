@@ -8,13 +8,6 @@ import { CDataTable } from '@coreui/react';
 const Application = () => {
   const { allApplication } = useSelector((state) => state.data);
 
-  // const [usersData, setUsersData] = useState({});
-
-  // useEffect(() => {
-  //   if (allApplication) {
-  //     setUsersData(allApplication);
-  //   }
-  // }, [allApplication]);
 
   const columns = [
     { key: 'id_number' },
