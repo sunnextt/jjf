@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CCardBody, CButton, CSmartTable } from '@coreui/react-pro';
+import { CCardBody, CButton, CSmartTable, CCard } from '@coreui/react-pro';
 import { useSelector } from 'react-redux';
 import { formateDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
@@ -39,7 +39,6 @@ const User = () => {
     }
   };
 
-  
   const styled = {
     textDecoration: 'none',
     padding: '5px 10px',
@@ -49,32 +48,34 @@ const User = () => {
   };
 
   return (
-    <CCardBody>
-      {allUser && (
-        <CDataTable
-          items={allUser}
-          fields={columns}
-          items-per-page-select
-          items-per-page="15"
-          pagination
-          hover
-          tableFilter
-          cleaner
-          scopedSlots={{
-            created_at: (item) => <td>{formateDate(item.created_at)} </td>,
-            show_details: ({ id }) => {
-              return (
-                <td className="py-2">
-                  <Link to={`/user/${id}`} color="primary" variant="outline" shape="square" size="sm" style={styled}>
-                    {id && 'details'}
-                  </Link>
-                </td>
-              );
-            },
-          }}
-        />
-      )}
-    </CCardBody>
+    <CCard>
+      <CCardBody>
+        {allUser && (
+          <CDataTable
+            items={allUser}
+            fields={columns}
+            items-per-page-select
+            items-per-page="15"
+            pagination
+            hover
+            tableFilter
+            cleaner
+            scopedSlots={{
+              created_at: (item) => <td>{formateDate(item.created_at)} </td>,
+              show_details: ({ id }) => {
+                return (
+                  <td className="py-2">
+                    <Link to={`/user/${id}`} color="primary" variant="outline" shape="square" size="sm" style={styled}>
+                      {id && 'details'}
+                    </Link>
+                  </td>
+                );
+              },
+            }}
+          />
+        )}
+      </CCardBody>
+    </CCard>
   );
 };
 

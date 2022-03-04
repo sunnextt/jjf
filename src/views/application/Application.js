@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CCardBody, CButton, CSmartTable } from '@coreui/react-pro';
+import { CCardBody, CButton, CSmartTable, CCard } from '@coreui/react-pro';
 import { useSelector } from 'react-redux';
 import { formateDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
@@ -58,39 +58,41 @@ const Application = () => {
     border: '1px solid blue',
   };
   return (
-    <CCardBody>
-      {allApplication && (
-        <CDataTable
-          items={allApplication}
-          fields={columns}
-          items-per-page-select
-          items-per-page="15"
-          pagination
-          hover
-          tableFilter
-          cleaner
-          scopedSlots={{
-            created_at: (item) => <td>{formateDate(item.created_at)} </td>,
-            show_details: (item) => {
-              return (
-                <td className="py-2">
-                  <Link
-                    to={`/application/${item.id}`}
-                    color="primary"
-                    variant="outline"
-                    shape="square"
-                    size="sm"
-                    style={styled}
-                  >
-                    {item.id && 'details'}
-                  </Link>
-                </td>
-              );
-            },
-          }}
-        />
-      )}
-    </CCardBody>
+    <CCard>
+      <CCardBody>
+        {allApplication && (
+          <CDataTable
+            items={allApplication}
+            fields={columns}
+            items-per-page-select
+            items-per-page="15"
+            pagination
+            hover
+            tableFilter
+            cleaner
+            scopedSlots={{
+              created_at: (item) => <td>{formateDate(item.created_at)} </td>,
+              show_details: (item) => {
+                return (
+                  <td className="py-2">
+                    <Link
+                      to={`/application/${item.id}`}
+                      color="primary"
+                      variant="outline"
+                      shape="square"
+                      size="sm"
+                      style={styled}
+                    >
+                      {item.id && 'details'}
+                    </Link>
+                  </td>
+                );
+              },
+            }}
+          />
+        )}
+      </CCardBody>
+    </CCard>
   );
 };
 

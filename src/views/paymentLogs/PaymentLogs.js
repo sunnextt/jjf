@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CCardBody, CButton, CSmartTable } from '@coreui/react-pro';
+import { CCard, CCardBody, CButton, CSmartTable } from '@coreui/react-pro';
 import { useSelector } from 'react-redux';
 import { formateDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
@@ -11,12 +11,10 @@ const PaymentLogs = () => {
   const columns = [
     { key: 'application_id' },
     { key: 'payer_name' },
-    { key: 'amount' },
+    { key: 'amount', label: 'Application fees' },
     { key: 'payment_reference_no' },
     // { key: 'email' },
     { key: 'payment_date' },
-    { key: 'application_fees' },
-    { key: 'status', _style: { width: '10%' } },
     {
       key: 'show_details',
       label: '',
@@ -48,37 +46,40 @@ const PaymentLogs = () => {
     borderRadius: '8px',
     border: '1px solid blue',
   };
+
   return (
-    <CCardBody>
-      {data && (
-        <CDataTable
-          items={data}
-          fields={columns}
-          items-per-page-select
-          hover
-          tableFilter
-          cleaner
-          scopedSlots={{
-            show_details: ({ id }) => {
-              return (
-                <td className="py-2">
-                  <Link
-                    to={`/payment-logs/${id}`}
-                    color="primary"
-                    variant="outline"
-                    shape="square"
-                    size="sm"
-                    style={styled}
-                  >
-                    {id && 'Details'}
-                  </Link>
-                </td>
-              );
-            },
-          }}
-        />
-      )}
-    </CCardBody>
+    <CCard>
+      <CCardBody>
+        {data && (
+          <CDataTable
+            items={data}
+            fields={columns}
+            items-per-page-select
+            hover
+            tableFilter
+            cleaner
+            scopedSlots={{
+              show_details: ({ id }) => {
+                return (
+                  <td className="py-2">
+                    <Link
+                      to={`/payment-logs/${id}`}
+                      color="primary"
+                      variant="outline"
+                      shape="square"
+                      size="sm"
+                      style={styled}
+                    >
+                      {id && 'Details'}
+                    </Link>
+                  </td>
+                );
+              },
+            }}
+          />
+        )}
+      </CCardBody>
+    </CCard>
   );
 };
 

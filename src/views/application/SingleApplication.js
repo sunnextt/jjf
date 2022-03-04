@@ -92,12 +92,10 @@ const SingleApplication = () => {
   const payColumns = [
     { key: 'application_id' },
     { key: 'payer_name' },
-    { key: 'amount' },
+    { key: 'amount', label: 'Application fees' },
     { key: 'payment_reference_no' },
     { key: 'email' },
     { key: 'payment_date' },
-    { key: 'status' },
-    { key: 'application_fees' },
   ];
 
   const getBadge = (status) => {
