@@ -47,6 +47,7 @@ const User = () => {
     border: '1px solid blue',
   };
 
+  console.log(allUser)
   return (
     <CCard>
       <CCardBody>
